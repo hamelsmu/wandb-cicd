@@ -24,13 +24,16 @@ jobs:
       shell: python
       run: |
         import re, os
-        match = re.search('${{env.MAGIC_COMMENT}}[\s+](\S+)', "${{ github.event.comment.body }}")
+        comment = os.getenv('PR_COMMENT', '')
+        match = re.search('${{env.MAGIC_COMMENT}}[\s+](\S+)', comment)
         with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
           if match:
             print(f'VAL_FOUND=true', file=f)
             print(f'MAGIC_VAL={match.group(1)}', file=f)
           else:
             print(f'VAL_FOUND=false', file=f)
+      env:
+        PR_COMMENT: ${{ github.event.comment.body }}
     - name: print value of magic command
       if:  steps.get-magic-value.outcome == 'success' && steps.get-magic-value.outputs.VAL_FOUND == 'true'
       run: echo "the value is ${{ steps.get-magic-value.outputs.MAGIC_VAL }}"
