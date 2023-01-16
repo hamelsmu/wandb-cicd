@@ -1,17 +1,18 @@
 name: ChatOps
 on: issue_comment # this is used for PRs https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_review
 
+env:
+  MAGIC_COMMENT: "/wandb"
+
 jobs:
   see-comment:
-    if: github.event.issue.pull_request
+    if: github.event.issue.pull_request # this makes sure the comment is made on a pull request
     runs-on: ubuntu-latest
     steps:
-    - run: echo "${{ github.event.comment.body }}"
-    - name: see payload
-      run: |
-        echo "PAYLOAD:\n${PAYLOAD}\n"
+    - name: see payload # this step is for debugging purposes only! 
+      run: echo "PAYLOAD:\n${PAYLOAD}\n"
       env:
         PAYLOAD: ${{ toJSON(github.event) }}
-    - name: another key body
-      if: github.event.issue.pull_request
-      run: echo "does this run"
+    - name: detect comment
+      if: contains(github.event.comment.body, env.MAGIC_COMMENT)
+      run: echo "The comment contains the magic word!"
