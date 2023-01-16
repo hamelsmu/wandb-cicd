@@ -3,6 +3,7 @@ on: issue_comment # this is used for PRs https://docs.github.com/en/actions/usin
 
 jobs:
   see-comment:
+    if: github.event.issue.pull_request
     runs-on: ubuntu-latest
     steps:
     - run: echo "${{ github.event.comment.body }}"
@@ -12,5 +13,5 @@ jobs:
       env:
         PAYLOAD: ${{ toJSON(github.event) }}
     - name: another key body
-      if: github.event.foobar
+      if: github.event.issue.pull_request
       run: echo "does this run"
