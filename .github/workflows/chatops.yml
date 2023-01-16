@@ -51,7 +51,6 @@ jobs:
       uses: actions/github-script@v6
       if: steps.get-magic-value.outcome == 'success' 
       with:
-#         github-token: ${{ secrets.MY_PAT }}
         script: |
            var msg = `👋 Hello!  You commented on this PR with a magic value of \`${process.env.MAGIC_VAL}\``
            github.rest.issues.createComment({
