@@ -7,14 +7,19 @@ env:
 jobs:
   see-comment:
     # this filters for only comments made on a pull request and if the magic comment is detected
-    if: (github.event.issue.pull_request != null) && contains(github.event.comment.body, env.MAGIC_COMMENT)
+    if: (github.event.issue.pull_request != null)
     runs-on: ubuntu-latest
     steps:
     - name: see payload # this step is for debugging purposes only, so you can see the payload. 
       run: echo "PAYLOAD:\n${PAYLOAD}\n"
       env:
         PAYLOAD: ${{ toJSON(github.event) }}
+    - name: filter for magic comment
+      id: filter
+      if: contains(github.event.comment.body, env.MAGIC_COMMENT)
+      run: echo "magic comment detected"
     - name: Parse value from the magic command
+      if: steps.filter.outcome == 'success'
       id: get-magic-value
       shell: python
       run: |
@@ -27,5 +32,5 @@ jobs:
           else:
             print(f'VAL_FOUND=false', file=fh)
     - name: print value of magic command
-      if:  steps.get-magic-value.outputs.VAL_FOUND == 'true'
+      if:  steps.get-magic-value.outcome == 'success' && steps.get-magic-value.outputs.VAL_FOUND == 'true'
       run: echo "the value is ${{ steps.get-magic-value.outputs.MAGIC_VAL }}"
