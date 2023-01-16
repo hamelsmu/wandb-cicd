@@ -6,7 +6,7 @@ env:
 
 jobs:
   see-comment:
-    # this filters for only comments made on a pull request and if the magic comment is detected
+    # this filters for only comments made on a pull request
     if: (github.event.issue.pull_request != null)
     runs-on: ubuntu-latest
     steps:
