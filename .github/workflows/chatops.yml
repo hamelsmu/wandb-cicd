@@ -1,6 +1,12 @@
 name: ChatOps
 on: issue_comment # this is used for PRs https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_review
 
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
 env:
   MAGIC_COMMENT: "/wandb" # this is a parameter you can change
 
