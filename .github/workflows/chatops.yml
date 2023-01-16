@@ -47,7 +47,7 @@ jobs:
       with:
         github-token: ${{ secrets.MY_PAT }}
         script: |
-           var msg = `👋 Hello!  You commented on this PR with a magic value of ${process.env.MAGIC_VAL}`
+           var msg = `👋 Hello!  You commented on this PR with a magic value of \`${process.env.MAGIC_VAL}\``
            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
