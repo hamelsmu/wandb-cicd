@@ -13,6 +13,6 @@ jobs:
       run: echo "PAYLOAD:\n${PAYLOAD}\n"
       env:
         PAYLOAD: ${{ toJSON(github.event) }}
-    - name: detect comment # Only runs if the magic comment is detected!
+    - name: detect comment # Only runs if the magic comment is detected
       if: contains(github.event.comment.body, env.MAGIC_COMMENT)
       run: echo "The comment contains the magic word!"
