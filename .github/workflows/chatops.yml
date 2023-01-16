@@ -8,7 +8,7 @@ jobs:
     - run: echo "${{ github.event.comment.body }}"
     - name: full body
       run: |
-        echo "${{ github.event }}"
+        echo "${{ toJSON(github.event) }}"
     - name: another key body
       if: github.event.foobar
       run: echo "does this run"
