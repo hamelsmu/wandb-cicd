@@ -14,10 +14,12 @@ jobs:
       run: echo "PAYLOAD:\n${PAYLOAD}\n"
       env:
         PAYLOAD: ${{ toJSON(github.event) }}
+        
     - name: filter for magic comment
       id: filter
       if: contains(github.event.comment.body, env.MAGIC_COMMENT)
       run: echo "magic comment detected"
+      
     - name: Parse value from the magic command
       if: steps.filter.outcome == 'success'
       id: get-magic-value
@@ -34,6 +36,23 @@ jobs:
             print(f'VAL_FOUND=false', file=f)
       env:
         PR_COMMENT: ${{ github.event.comment.body }}
+        
     - name: print value of magic command
       if:  steps.get-magic-value.outcome == 'success' && steps.get-magic-value.outputs.VAL_FOUND == 'true'
       run: echo "the value is ${{ steps.get-magic-value.outputs.MAGIC_VAL }}"
+      
+    - name: Make a comment with the GitHub API
+      uses: actions/github-script@v6
+      if: steps.get-magic-value.outcome == 'success' 
+      with:
+        github-token: ${{ secrets.MY_PAT }}
+        script: |
+           var msg = `👋 Hello!  You commented on this PR with a magic value of ${process.env.MAGIC_VAL}`
+           github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: msg
+            })
+      env:
+        MAGIC_VAL: "${{ steps.get-magic-value.outputs.MAGIC_VAL }}"
