@@ -6,13 +6,26 @@ env:
 
 jobs:
   see-comment:
-    if: github.event.issue.pull_request # this filters for only comments made on a pull request
+    # this filters for only comments made on a pull request and if the magic comment is detected
+    if: (github.event.issue.pull_request != null) && contains(github.event.comment.body, env.MAGIC_COMMENT)
     runs-on: ubuntu-latest
     steps:
     - name: see payload # this step is for debugging purposes only, so you can see the payload. 
       run: echo "PAYLOAD:\n${PAYLOAD}\n"
       env:
         PAYLOAD: ${{ toJSON(github.event) }}
-    - name: detect comment # Only runs if the magic comment is detected
-      if: contains(github.event.comment.body, env.MAGIC_COMMENT)
-      run: echo "The comment contains the magic word!"
+    - name: Parse value from the magic command
+      id: get-magic-value
+      shell: python
+      run: |
+        import re, os
+        match = re.search('${{env.MAGIC_COMMENT}}[\s+](\S+)', "${{ github.event.comment.body }}")
+        with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+          if match:
+            print(f'VAL_FOUND=true', file=fh)
+            print(f'MAGIC_VAL={match.group(1)}', file=fh)
+          else:
+            print(f'VAL_FOUND=false', file=fh)
+    - name: print value of magic command
+      if:  steps.get-magic-value.outputs.VAL_FOUND == 'true'
+      run: echo "the value is ${{ steps.get-magic-value.outputs.MAGIC_VAL }}"
