@@ -25,7 +25,7 @@ jobs:
       run: |
         import re, os
         comment = os.getenv('PR_COMMENT', '')
-        match = re.search('${{env.MAGIC_COMMENT}}[\s+](\S+)', comment)
+        match = re.search('${{ env.MAGIC_COMMENT }}[\s+](\S+)', comment)
         with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
           if match:
             print(f'VAL_FOUND=true', file=f)
