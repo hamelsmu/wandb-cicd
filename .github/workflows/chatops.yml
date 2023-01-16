@@ -5,6 +5,6 @@ jobs:
   see-comment:
     runs-on: ubuntu-latest
     steps:
-    - run: echo ${{github.event.comment.body}}
+    - run: echo "${{ github.event.comment.body }}"
     - name: full body
-      run: echo ${{ toJSON(github.event) }}
+      run: echo "${{ toJSON(github.event) }}"
