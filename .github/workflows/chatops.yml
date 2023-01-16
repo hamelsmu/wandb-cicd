@@ -6,10 +6,10 @@ env:
 
 jobs:
   see-comment:
-    if: github.event.issue.pull_request # this makes sure the comment is made on a pull request
+    if: github.event.issue.pull_request # this filters for only comments made on a pull request
     runs-on: ubuntu-latest
     steps:
-    - name: see payload # this step is for debugging purposes only! 
+    - name: see payload # this step is for debugging purposes only, so you can see the payload. 
       run: echo "PAYLOAD:\n${PAYLOAD}\n"
       env:
         PAYLOAD: ${{ toJSON(github.event) }}
