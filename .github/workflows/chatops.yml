@@ -6,9 +6,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: echo "${{ github.event.comment.body }}"
-    - name: full body
+    - name: see payload
       run: |
-        echo "${{ toJSON(github.event) }}"
+        echo "PAYLOAD:\n${PAYLOAD}\n"
+      env:
+        PAYLOAD: ${{ toJSON(github.event) }}
     - name: another key body
       if: github.event.foobar
       run: echo "does this run"
