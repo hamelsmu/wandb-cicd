@@ -1,1 +1,10 @@
 name: ChatOps
+on: issue_comment # this is used for PRs https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_review
+
+jobs:
+  see-comment:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo ${{github.event.comment.body}}
+    - name: full body
+      run: echo ${{ toJSON(github.event) }}
