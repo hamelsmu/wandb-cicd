@@ -7,4 +7,6 @@ jobs:
     steps:
     - run: echo "${{ github.event.comment.body }}"
     - name: full body
-      run: echo "${{ toJSON(github.event) }}"
+      run: echo "${{ toJSON(github.event.pulls_url) }}"
+    - name: another key body
+      run: echo "${{ toJSON(github.event.foobar) }}"
