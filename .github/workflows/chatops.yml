@@ -27,10 +27,10 @@ jobs:
         match = re.search('${{env.MAGIC_COMMENT}}[\s+](\S+)', "${{ github.event.comment.body }}")
         with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
           if match:
-            print(f'VAL_FOUND=true', file=fh)
-            print(f'MAGIC_VAL={match.group(1)}', file=fh)
+            print(f'VAL_FOUND=true', file=f)
+            print(f'MAGIC_VAL={match.group(1)}', file=f)
           else:
-            print(f'VAL_FOUND=false', file=fh)
+            print(f'VAL_FOUND=false', file=f)
     - name: print value of magic command
       if:  steps.get-magic-value.outcome == 'success' && steps.get-magic-value.outputs.VAL_FOUND == 'true'
       run: echo "the value is ${{ steps.get-magic-value.outputs.MAGIC_VAL }}"
