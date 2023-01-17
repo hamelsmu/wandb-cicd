@@ -11,23 +11,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:        
     - name: install dependencies
-      run: pip install ghapi
-      
-    - name: see payload # this step is for debugging purposes only, so you can see the payload. 
-      run: echo "PAYLOAD:\n${PAYLOAD}\n"
-      env:
-        PAYLOAD: ${{ toJSON(github.event) }}   
+      run: pip install ghapi 
       
     - name: Make a comment
       shell: python
       run: |
         import os
         from ghapi.core import GhApi
-        num = os.environ['NUMBER']
         owner,repo = os.environ['REPO'].split('/')
-        print(num,owner,repo)
         api = GhApi(owner=owner, repo=repo)
-        api.issues.create_comment(num, "Hi! I'm making a comment with `ghapi` in Actions!")
+        api.issues.create_comment(os.environ['NUMBER'], "Hi! I'm making a comment with `ghapi` in Actions!")
       env:
         NUMBER: ${{ github.event.number }} 
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
