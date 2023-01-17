@@ -1,0 +1,26 @@
+name: ghapi
+on: pull_request
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  ghapi:
+    runs-on: ubuntu-latest
+    steps:        
+    - name: install dependencies
+      run: pip install ghapi
+      
+    - name: Make a comment
+      shell: python
+      run: |
+        import os
+        api = GhApi(owner=os.environ['OWNER'], repo=os.environ['REPO'])
+        api.issues.create_comment(os.environ['NUMBER'], "Hi! I'm making a comment with `ghapi` in Actions!")
+      env:
+        OWNER: ${{ github.repo.owner }}
+        REPO: ${{ github.repo.repo }}
+        NUMBER: ${{ github.issue.number }} 
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
