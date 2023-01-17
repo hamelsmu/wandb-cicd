@@ -21,7 +21,7 @@ jobs:
         num = os.environ['NUMBER']
         print(f'issue_num: {num}')
         api = GhApi(owner=os.environ['OWNER'], repo=os.environ['REPO'])
-        api.issues.create_comment(issue_number=os.environ['NUMBER'], "Hi! I'm making a comment with `ghapi` in Actions!")
+        api.issues.create_comment(os.environ['NUMBER'], "Hi! I'm making a comment with `ghapi` in Actions!")
       env:
         OWNER: ${{ github.repo.owner }}
         REPO: ${{ github.repo.repo }}
