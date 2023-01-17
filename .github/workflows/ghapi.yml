@@ -24,11 +24,11 @@ jobs:
         import os
         from ghapi.core import GhApi
         num = os.environ['NUMBER']
-        owner='hamelsmu'
-        repo = os.environ['GITHUB_ACTION_REPOSITORY']
+        owner,repo = os.environ['REPO'].split('/')
         print(num,owner,repo)
         api = GhApi(owner=owner, repo=repo)
         api.issues.create_comment(num, "Hi! I'm making a comment with `ghapi` in Actions!")
       env:
         NUMBER: ${{ github.event.number }} 
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REPO: ${{ github.repository }}
