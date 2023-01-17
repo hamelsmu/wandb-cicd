@@ -1,0 +1,17 @@
+name: io
+on: [push]
+
+jobs:
+  io:
+    runs-on: ubuntu-latest
+    steps:
+      - name: set-var
+        id: set-var
+        shell: python
+        run: |
+          import os
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+            print(f'VAL=true', file=f)
+      - name: print value 
+        run: echo "the value is ${{ steps.set-var.outputs.VAL }}"
+    
