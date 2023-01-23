@@ -1,0 +1,11 @@
+# This is a possible solution to the first assignment
+name: GitHub Actions Demo
+
+on: 
+  pull_request: ['labeled']
+
+jobs:
+  exercise-one:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "hello world"
