@@ -1,8 +1,8 @@
-# This is a possible solution to the first assignment
-name: GitHub Actions Demo
+name: Excericse One Solution
 
 on: 
-  pull_request: ['labeled']
+  pull_request: 
+    types: ['labeled']
 
 jobs:
   exercise-one:
