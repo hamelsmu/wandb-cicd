@@ -11,16 +11,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:        
     - name: install dependencies
-      run: pip install ghapi
+      run: pip install ghapi 
       
     - name: Make a comment
       shell: python
       run: |
         import os
-        api = GhApi(owner=os.environ['OWNER'], repo=os.environ['REPO'])
+        from ghapi.core import GhApi
+        owner,repo = os.environ['REPO'].split('/')
+        api = GhApi(owner=owner, repo=repo)
         api.issues.create_comment(os.environ['NUMBER'], "Hi! I'm making a comment with `ghapi` in Actions!")
       env:
-        OWNER: ${{ github.repo.owner }}
-        REPO: ${{ github.repo.repo }}
-        NUMBER: ${{ github.issue.number }} 
+        NUMBER: ${{ github.event.number }} 
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REPO: ${{ github.repository }}

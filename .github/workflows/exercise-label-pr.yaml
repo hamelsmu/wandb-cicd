@@ -1,0 +1,11 @@
+name: Excericse One Solution
+
+on: 
+  pull_request: 
+    types: ['labeled']
+
+jobs:
+  exercise-one:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "hello world"
