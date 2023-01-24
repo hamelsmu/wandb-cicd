@@ -2,6 +2,9 @@ name: excercise-wandb-advanced
 on: 
   pull_request:
     types: [opened, reopened, synchronize, labeled, unlabeled]
+  workflow_run:
+    workflows: [excercise-wandb]
+    types: [completed]
 
 jobs:
   check-linked-experiment:
