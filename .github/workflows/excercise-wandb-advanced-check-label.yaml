@@ -1,7 +1,7 @@
 name: excercise-wandb-advanced
 on: 
   pull_request:
-    types: [opened, reopened, synchronize, labeled]
+    types: [opened, reopened, synchronize, labeled, unlabeled]
 
 jobs:
   check-linked-experiment:
