@@ -7,6 +7,7 @@ jobs:
   check-linked-experiment:
     runs-on: ubuntu-latest
     steps:        
+     - run: pip install ghapi
      - name: Check that label exists
        shell: python
        run: |
