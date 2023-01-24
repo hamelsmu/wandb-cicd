@@ -22,7 +22,7 @@ default_config = SimpleNamespace(
     pretrained=True,  # whether to use pretrained encoder,
     mixed_precision=True, # use automatic mixed precision
     arch="resnet18",
-    seed=42,
+    seed=43,
     log_preds=False,
 )
 
