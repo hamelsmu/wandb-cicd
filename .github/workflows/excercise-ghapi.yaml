@@ -28,6 +28,6 @@ jobs:
         api = GhApi(owner=owner, repo=repo)
         api.issues.add_labels(issue_number=os.environ['NUMBER'], labels=['bug'])
       env:
-        NUMBER: ${{ github.event.number }} 
+        NUMBER: ${{ github.event.issue.number }} 
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         REPO: ${{ github.repository }}
