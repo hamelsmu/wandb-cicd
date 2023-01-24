@@ -3,7 +3,7 @@ on: issue_comment
 
 permissions:
   issues: write
-  pull_request: write
+  pull-requests: write
 
 jobs:
   ghapi-exercise:
