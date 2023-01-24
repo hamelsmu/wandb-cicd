@@ -8,8 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:        
      - name: Check that label exists
-      shell: python
-      run: |
+       shell: python
+       run: |
         import os
         from ghapi.core import GhApi
         owner,repo = os.environ['REPO'].split('/')
@@ -17,7 +17,7 @@ jobs:
         pull = api.pulls.get(os.environ['NUMBER'])
         labels = [l.name for l in pull.labels]
         assert 'experiment-linked' in labels, "The PR does not have the required label 'experiment-linked'"
-      env:
+       env:
         NUMBER: ${{ github.event.number }} 
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         REPO: ${{ github.repository }}
