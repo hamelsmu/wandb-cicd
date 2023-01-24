@@ -51,7 +51,7 @@ jobs:
       if: steps.wandb-report.outcome == 'success' 
       with:
         script: |
-           var msg = `👋 Hello!  You commented on this PR with a magic value of \`${process.env.REPORT_URL}\``
+           var msg = `A comparison between the linked run and baseline is available here: \`${process.env.REPORT_URL}\``
            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
