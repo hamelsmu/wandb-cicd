@@ -1,4 +1,4 @@
-name: excercise-ghapi
+name: excercise-wandb
 on: issue_comment
 
 permissions:
