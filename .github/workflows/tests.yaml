@@ -6,13 +6,13 @@ on:
       
   workflow_dispatch:
 
+defaults:
+  run:
+    shell: bash -el {0}
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash -el {0}
     steps:
 
       - name: Copy Repository Contents
