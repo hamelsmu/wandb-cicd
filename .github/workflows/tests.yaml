@@ -20,6 +20,6 @@ jobs:
           cache-env: true
           
       - run: |
-          mamba info
-          mamba list
-          
+          micromamba activate course
+          micromamba info
+          micromamba list
