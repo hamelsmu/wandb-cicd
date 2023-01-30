@@ -1,0 +1,26 @@
+name: "Unit & Smoke Tests"
+on:
+#   pull_request:
+  workflow_dispatch:
+
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Copy Repository Contents
+        uses: actions/checkout@main
+   
+       - uses: conda-incubator/setup-miniconda@v2
+         with:
+          activate-environment: course
+          environment-file: test-example/conda-environment.yaml
+          python-version:  3.9.12
+          
+       - run: |
+           conda info
+           conda list
+          
+
+
