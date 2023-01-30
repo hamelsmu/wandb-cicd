@@ -11,14 +11,31 @@ jobs:
 
       - name: Copy Repository Contents
         uses: actions/checkout@main
-   
-      - uses: conda-incubator/setup-miniconda@v2
+      
+      - name: Get Date
+        id: get-date
+        run: echo "today=$(/bin/date -u '+%Y%m%d')" >> $GITHUB_OUTPUT
+        shell: bash
+      
+      - name: Cache conda
+        uses: actions/cache@v2
+        env:
+          # Increase this value to reset cache if etc/example-environment.yml has not changed
+          CACHE_NUMBER: 0
         with:
-          activate-environment: course
+          path: ~/conda_pkgs_dir
+          key:
+            ${{ env.CACHE_NUMBER }}--${{ steps.get-date.outputs.today }}-${{hashFiles('test-example/conda-environment.yaml') }}
+   
+   
+      - name: Install Conda environment with Micromamba
+        uses: mamba-org/provision-with-micromamba@main
+        with:
           environment-file: test-example/conda-environment.yaml
-          use-mamba: true
+          environment-name: course
+          cache-env: true
           
       - run: |
-          conda info
-          conda list
+          mamba info
+          mamba list
           
