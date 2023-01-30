@@ -26,3 +26,5 @@ jobs:
           micromamba activate course
           pip install -U pytest
           pytest test-example/
+        env:
+          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
