@@ -12,15 +12,13 @@ jobs:
       - name: Copy Repository Contents
         uses: actions/checkout@main
    
-       - uses: conda-incubator/setup-miniconda@v2
-         with:
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
           activate-environment: course
           environment-file: test-example/conda-environment.yaml
           python-version:  3.9.12
           
-       - run: |
-           conda info
-           conda list
+      - run: |
+          conda info
+          conda list
           
-
-
