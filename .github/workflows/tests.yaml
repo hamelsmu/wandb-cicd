@@ -1,6 +1,6 @@
 name: "Unit & Smoke Tests - mamba"
 on:
-#   pull_request:
+  pull_request:
   workflow_dispatch:
 
 
@@ -21,6 +21,7 @@ jobs:
           environment-file: test-example/conda-environment.yaml
           environment-name: course
           cache-env: true
+          cache-downloads: true
           
       - run: |
           micromamba activate course
