@@ -1,6 +1,9 @@
 name: "Unit & Smoke Tests - mamba"
 on:
   pull_request:
+    paths:
+      - test-example/**
+      
   workflow_dispatch:
 
 
