@@ -16,7 +16,7 @@ jobs:
         with:
           activate-environment: course
           environment-file: test-example/conda-environment.yaml
-          python-version:  3.9.12
+          use-mamba: true
           
       - run: |
           conda info
