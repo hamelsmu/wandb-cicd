@@ -16,7 +16,8 @@ branch_name = gapi.pulls.get(pr_num).head.ref
 
 deploy = gapi.repos.create_deployment(ref=branch_name,
                                        environment=environment,
-                                 payload={'run_id': run_id, 'registry_url':registry_url})
+                                       auto_merge=False,
+                                       payload={'run_id': run_id, 'registry_url':registry_url})
 
 status = gapi.repos.create_deployment_status(deployment_id=deploy.id,
                                              environment=environment,
