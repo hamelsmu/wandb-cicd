@@ -51,12 +51,26 @@ jobs:
       if: steps.wandb-report.outcome == 'success' 
       with:
         script: |
-           var msg = `A comparison between the linked run and baseline is available here: \`${process.env.REPORT_URL}\``
+           var msg = `A comparison between the linked run and baseline is available [in this report](${process.env.REPORT_URL})`
            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: msg
-            })
+            });
       env:
         REPORT_URL: "${{ steps.wandb-report.outputs.REPORT_URL }}"
+        
+    # This next step if for an advanced version of the workflow    
+    - name: Advanced- label the PR
+      uses: actions/github-script@v6
+      if: steps.wandb-report.outcome == 'success' 
+      with:
+        github-token: ${{ secrets.MY_PAT }} # We have to use our own token because we want to trigger another action
+        script: |            
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ["experiment-linked"]
+             });
