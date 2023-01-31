@@ -57,6 +57,6 @@ jobs:
       env:
         REPO: "${{ github.repository }}"
         WANDB_RUN_ID: "${{ steps.get-runid-value.outputs.RUN_ID }}"
-        PR_NUM: "${{ github.issue.number }}"
+        PR_NUM: "${{ github.event.issue.number }}"
         REGISTRY_URL: "${{ steps.wandb-promote.outputs.REGISTRY_URL }}"
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
