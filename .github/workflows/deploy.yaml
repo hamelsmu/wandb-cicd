@@ -48,7 +48,7 @@ jobs:
         
     - name: Create a deployment
       if: steps.wandb-promote.outcome == 'success' 
-      run: python ./client/deploy.py
+      run: python ./client/deployment.py
       env:
         REPO: "${{ github.repository }}"
         WANDB_RUN_ID: "${{ steps.get-runid-value.outputs.RUN_ID }}"
