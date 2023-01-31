@@ -54,3 +54,4 @@ jobs:
         WANDB_RUN_ID: "${{ steps.get-runid-value.outputs.RUN_ID }}"
         PR_NUM: "${{ github.issue.number }}"
         REGISTRY_URL: "${{ steps.wandb-promote.outputs.REGISTRY_URL }}"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
