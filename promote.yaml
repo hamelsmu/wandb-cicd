@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   ghapi-exercise:
-    if: (github.event.issue.pull_request != null) && contains(github.event.comment.body, '/promote')
+    if: (github.event.issue.pull_request != null) && contains(github.event.comment.body, '/deploy')
     runs-on: ubuntu-latest
     steps:        
 
@@ -25,7 +25,7 @@ jobs:
       run: |
         import re, os
         comment = os.getenv('PR_COMMENT', '')
-        match = re.search('/promote[\s+](\S+)', comment)
+        match = re.search('/deploy[\s+](\S+)', comment)
 
         with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
           if match:
