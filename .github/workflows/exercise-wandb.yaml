@@ -41,7 +41,7 @@ jobs:
       run: python ./client/compare_runs.py
       env:
         WANDB_ENTITY: hamelsmu
-        WANDB_PROJECT: my-report-project
+        WANDB_PROJECT: cicd_demo
         BASELINE_TAG: baseline
         RUN_ID: "${{ steps.get-runid-value.outputs.RUN_ID }}"
         WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}

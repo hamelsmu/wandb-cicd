@@ -9,14 +9,9 @@ permissions:
 
 jobs:
   ghapi-exercise:
-    if: (github.event.issue.pull_request != null) && contains(github.event.comment.body, '/promote')
+    if: (github.event.issue.pull_request != null) && contains(github.event.comment.body, '/deploy')
     runs-on: ubuntu-latest
     steps:        
-
-    - name: see payload # this step is for debugging purposes only, so you can see the payload. 
-      run: echo "PAYLOAD:\n${PAYLOAD}\n"
-      env:
-        PAYLOAD: ${{ toJSON(github.event) }}
 
     - name: Get repo contents
       uses: actions/checkout@v3
@@ -30,7 +25,7 @@ jobs:
       run: |
         import re, os
         comment = os.getenv('PR_COMMENT', '')
-        match = re.search('/promote[\s+](\S+)', comment)
+        match = re.search('/deploy[\s+](\S+)', comment)
 
         with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
           if match:
@@ -49,14 +44,13 @@ jobs:
         WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
         WANDB_RUN_ID: "${{ steps.get-runid-value.outputs.RUN_ID }}"
         WANDB_RUN_PATH: "hamelsmu/cicd_demo/"
-        WANDB_REGISTRY_PATH: "hamelsmu/model-registry/CICD_Demo_Registry"
+        WANDB_REGISTRY_PATH: "av-team/model-registry/BDD Semantic Segmentation"
         
     - name: Create a deployment
       if: steps.wandb-promote.outcome == 'success' 
-      run: python ./client/deployment.py
+      run: python ./client/deploy.py
       env:
         REPO: "${{ github.repository }}"
         WANDB_RUN_ID: "${{ steps.get-runid-value.outputs.RUN_ID }}"
-        PR_NUM: "${{ github.event.issue.number }}"
+        PR_NUM: "${{ github.issue.number }}"
         REGISTRY_URL: "${{ steps.wandb-promote.outputs.REGISTRY_URL }}"
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
