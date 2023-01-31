@@ -13,7 +13,7 @@ def get_baseline_run(entity='hamelsmu', project='my-report-project', tag='baseli
 
 
 def compare_runs(entity='hamelsmu',
-                 project='my-report-project',
+                 project='cicd_demo',
                  tag='baseline',
                  run_id=None):
     "Compare the current run to the baseline run."
