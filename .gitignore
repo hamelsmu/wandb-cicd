@@ -9,3 +9,4 @@ Untitled.ipynb
 models/
 artifacts/
 wandb/
+.ipynb_checkpoints/
