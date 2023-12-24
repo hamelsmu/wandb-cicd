@@ -3,7 +3,7 @@ import wandb.apis.reports as wr
 
 assert os.getenv('WANDB_API_KEY'), 'You must set the WANDB_API_KEY environment variable'
 
-def get_baseline_run(entity='hamelsmu', project='my-report-project', tag='baseline'):
+def get_baseline_run(tag='baseline'):
     "Get the baseline run from the project using tags"
 
     api = wandb.Api()
@@ -12,16 +12,13 @@ def get_baseline_run(entity='hamelsmu', project='my-report-project', tag='baseli
     return runs[0]
 
 
-def compare_runs(entity='hamelsmu',
-                 project='cicd_demo',
-                 tag='baseline',
+def compare_runs(tag='baseline',
                  run_id=None):
     "Compare the current run to the baseline run."
 
     # Allow you to override the args with env variables
-    entity = os.getenv('WANDB_ENTITY') or entity
-    project = os.getenv('WANDB_PROJECT') or project
-    tag = os.getenv('BASELINE_TAG') or tag
+    entity = os.getenv('WANDB_ENTITY')
+    project = os.getenv('WANDB_PROJECT')
     run_id = os.getenv('RUN_ID') or run_id
     assert run_id, 'You must set the RUN_ID environment variable or pass a `run_id` argument'
 
